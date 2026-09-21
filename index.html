@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Unternehmenslandkarte</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --bg: #0c0f14;
+  --bg2: #141922;
+  --card: #1a2030;
+  --line: #2a3347;
+  --text: #e8edf7;
+  --muted: #93a0b8;
+  --gold: #e2c58a;
+  --ok: #7dcea0;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: Instrument Sans, system-ui, sans-serif;
+  background:
+    radial-gradient(1200px 600px at 10% -10%, #243056 0%, transparent 50%),
+    radial-gradient(900px 500px at 100% 0%, #2a2214 0%, transparent 45%),
+    var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+header {
+  padding: 36px 28px 18px;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+.kicker {
+  color: var(--gold);
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: 600;
+}
+h1 {
+  font-family: Instrument Serif, Georgia, serif;
+  font-size: clamp(36px, 6vw, 64px);
+  font-weight: 400;
+  margin: 8px 0 10px;
+}
+.sub { color: var(--muted); max-width: 720px; line-height: 1.55; }
+.toolbar {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 8px 28px 24px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+input[type=search] {
+  flex: 1;
+  min-width: 240px;
+  background: var(--bg2);
+  border: 1px solid var(--line);
+  color: var(--text);
+  border-radius: 14px;
+  padding: 14px 16px;
+  font: inherit;
+}
+button.ghost {
+  background: var(--card);
+  border: 1px solid var(--line);
+  color: var(--text);
+  border-radius: 12px;
+  padding: 12px 14px;
+  font: inherit;
+  cursor: pointer;
+}
+.tabs {
+  max-width: 1280px;
+  margin: 0 auto 12px;
+  padding: 0 28px;
+  display: flex;
+  gap: 8px;
+  overflow: auto;
+}
+.tab {
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--muted);
+  border-radius: 999px;
+  padding: 8px 14px;
+  cursor: pointer;
+  white-space: nowrap;
+  font: inherit;
+}
+.tab.active { color: #111; background: var(--gold); border-color: var(--gold); }
+main { max-width: 1280px; margin: 0 auto; padding: 8px 28px 80px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; }
+.card {
+  background: linear-gradient(180deg, #1d2435, #161b28);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 16px;
+  min-height: 120px;
+}
+.card h2 {
+  margin: 0 0 6px;
+  font-size: 18px;
+}
+.role { color: var(--gold); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; }
+.tree { margin-top: 10px; }
+details { border-top: 1px solid #263049; padding: 8px 0 2px; }
+summary {
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-weight: 600;
+}
+summary::-webkit-details-marker { display: none; }
+summary:after { content: "+"; color: var(--gold); font-weight: 500; }
+details[open] > summary:after { content: "–"; }
+.item, li {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.45;
+}
+ul { margin: 8px 0 0; padding-left: 18px; }
+.chiprow { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.chip {
+  border: 1px solid #33405a;
+  background: #121828;
+  border-radius: 999px;
+  padding: 5px 10px;
+  font-size: 12px;
+  color: #d5deef;
+}
+.hide { display: none !important; }
+.note {
+  margin-top: 28px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.6;
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="kicker">Maximal-Organigramm</div>
+  <h1>Unternehmenslandkarte</h1>
+  <p class="sub">Alle Organe, Ressorts, Abteilungen und die zweite Achse der Geschäftsbereiche. Suche filtert live. Karten aufklappen für die Hierarchie.</p>
+</header>
+<div class="toolbar">
+  <input id="q" type="search" placeholder="Suchen: Controlling, Treasury, Recruiting…" />
+  <button class="ghost" id="openAll">Alles aufklappen</button>
+  <button class="ghost" id="closeAll">Alles zuklappen</button>
+</div>
+<div class="tabs" id="tabs"></div>
+<main>
+  <div class="grid" id="grid"></div>
+  <p class="note">Das ist der volle Baukasten, nicht das Pflichtorganigramm einer 12-Personen-Firma. Dieselben Funktionen existieren dort auch — nur gebündelt. Controlling sitzt unter dem CFO und als Business Partner in den Divisions. Revision berichtet fachlich oft an den Aufsichtsrat.</p>
+</main>
+<script>
+const data = [
+  {id:'organe', tab:'Organe', role:'Eigentum & Kontrolle', title:'Eigentümer & Aufsichtsrat', children:[
+    {t:'Gesellschafterversammlung / Hauptversammlung', items:['Beschlüsse der Eigentümer','Entlastung','Satzungsfragen']},
+    {t:'Aufsichtsrat / Beirat', items:['Prüfungsausschuss','Personalausschuss','Nominierungsausschuss']},
+    {t:'Interne Revision / Internal Audit', items:['unabhängige Prüfung','oft fachlich an AR','nicht an den geprüften CFO gebunden']}
+  ]},
+  {id:'ceo', tab:'CEO', role:'CEO / Vorsitz', title:'Strategie & Konzernstab', children:[
+    {t:'CEO-Office / Gremienbüro', items:['Sekretariat','Vorstandskalender','Protokoll']},
+    {t:'Strategie / Konzernentwicklung', items:['Zielbild','Portfolio','Steuerungslogik']},
+    {t:'M&A / Beteiligungen', items:['Kauf','Verkauf','Integration']},
+    {t:'PMO / Transformation', items:['Projektportfolio','Change','Priorisierung']},
+    {t:'Kommunikation', items:['PR / Presse','Interne Kommunikation','Krisenkommunikation']},
+    {t:'Public Affairs', items:['Politik','Verbände','Government Relations']},
+    {t:'ESG / Nachhaltigkeit / CSR', items:['Strategie','Bericht','Stiftung / Engagement']},
+    {t:'Risikomanagement', items:['Konzernrisiken','Risikokatalog','Steuerung']},
+    {t:'Versicherungen', items:['Policen','Schäden','Captives']}
+  ]},
+  {id:'cfo', tab:'CFO', role:'CFO / Finanzen', title:'Finance-Cluster inkl. Controlling', children:[
+    {t:'Rechnungswesen / Buchhaltung', items:['Hauptbuch','Anlagenbuchhaltung','Debitoren / Order-to-Cash','Kreditoren / Purchase-to-Pay','Lohnbuchhaltung','Konzernabschluss / Konsolidierung']},
+    {t:'Controlling', items:['Konzerncontrolling','FP&A Budget Forecast Szenarien','Operatives Controlling','Vertriebscontrolling','HR-Controlling','Investitionscontrolling','ESG-Controlling']},
+    {t:'Treasury', items:['Liquidität / Cash','Banken / Finanzierung','Zins- und Währungsmanagement','Anlage überschüssiger Mittel']},
+    {t:'Credit Management', items:['Zahlungsziele','Forderungsrisiko']},
+    {t:'Steuern / Tax', items:['Ertragsteuern','Umsatzsteuer','Transferpreise / International Tax']},
+    {t:'Investor Relations', items:['Kapitalmarkt','Analysten','Hauptversammlung']},
+    {t:'Shared Service Finance', items:['Massenprozesse zentral']}
+  ]},
+  {id:'chro', tab:'People', role:'CHRO / Personal', title:'Human Resources', children:[
+    {t:'HR Business Partner', items:['Anlaufstelle der Fachbereiche']},
+    {t:'Recruiting / Talent Acquisition', items:['Suche','Auswahl','Onboarding-Start']},
+    {t:'HR Operations / People Ops', items:['Stammdaten','Verträge / Zeugnisse','Offboarding']},
+    {t:'Compensation & Benefits', items:['Gehalt','Bonus','Altersvorsorge']},
+    {t:'Payroll / Entgeltabrechnung', items:['Lohnlauf','Bescheinigungen']},
+    {t:'Learning & Development', items:['Schulung','Führungskräfte']},
+    {t:'Workforce Planning', items:['Headcount','Organisation']},
+    {t:'Labor Relations', items:['Betriebsrat','Tarif','Arbeitsrecht-Alltag']},
+    {t:'Health / BEM / BGM', items:['Gesundheit','Wiedereingliederung']},
+    {t:'Diversity / Inclusion', items:['Kultur','Programme']}
+  ]},
+  {id:'legal', tab:'Recht', role:'General Counsel', title:'Recht, Compliance, Datenschutz', children:[
+    {t:'Legal', items:['Vertragsrecht','Gesellschaftsrecht','Arbeitsrecht','Litigation','IP / Marken / Patente']},
+    {t:'Compliance', items:['Regeln','Hinweisgebersystem','Investigations','Regulierungsmanagement']},
+    {t:'Datenschutz / DPO', items:['DSGVO','Betroffenenrechte']}
+  ]},
+  {id:'cio', tab:'IT', role:'CIO / CDO / CISO', title:'IT, Daten, Digitales', children:[
+    {t:'IT-Infrastruktur / Workplace', items:['Netz','Cloud','Endgeräte']},
+    {t:'Application Management / ERP', items:['SAP / Datev / CRM']},
+    {t:'Enterprise Architecture', items:['Systemlandschaft']},
+    {t:'IT-Helpdesk', items:['Tickets','Störungen']},
+    {t:'IT-Security / CISO', items:['Berechtigungen','SOC','Backups']},
+    {t:'Data / Analytics / BI', items:['Dashboards','Modelle']},
+    {t:'Master Data', items:['Kunden- Artikel- Lieferantenstamm']},
+    {t:'Digital / Product Tech', items:['eigene Software','Plattform']},
+    {t:'KI / Automation', items:['Assistenzsysteme','Prozessautomatisierung']}
+  ]},
+  {id:'cso', tab:'Markt', role:'CSO / CCO', title:'Vertrieb & Kunde', children:[
+    {t:'Vertrieb', items:['Key Account','Field Sales','Inside Sales / SDR','Partner- / Channelvertrieb']},
+    {t:'Pricing', items:['Preise','Rabatte','Konditionen']},
+    {t:'Business Development', items:['neue Märkte','neue Angebote']},
+    {t:'Customer Success', items:['Bestandskunden erweitern']},
+    {t:'Customer Service / Support', items:['Störung','Reklamation','Hotline']},
+    {t:'Customer Experience', items:['Kundenreise über Kanäle']}
+  ]},
+  {id:'cmo', tab:'Marketing', role:'CMO', title:'Marke & Nachfrage', children:[
+    {t:'Brand / Corporate Marketing', items:['Marke','Kampagnenrahmen']},
+    {t:'Produktmarketing', items:['warum dieses Produkt']},
+    {t:'Digital / Performance Marketing', items:['Ads','SEO','Website']},
+    {t:'Content / Kampagnen', items:['Texte','Assets']},
+    {t:'Sponsoring / Partnerships', items:['Kooperationen']},
+    {t:'Employer Branding', items:['oft mit HR']}
+  ]},
+  {id:'coo', tab:'Operations', role:'COO', title:'Operations, Kette, Infrastruktur', children:[
+    {t:'Operations / Delivery', items:['laufender Betrieb','Projekte']},
+    {t:'Produktion / Fertigung', items:['Herstellung','Produktionsplanung','Instandhaltung','Industrial Engineering']},
+    {t:'Qualität / QM', items:['QS','QMS','Lieferantenqualität']},
+    {t:'After Sales / Field Service', items:['Wartung','Ersatzteile']},
+    {t:'Einkauf / Procurement', items:['Strategischer Einkauf','Operativer Einkauf','P2P','Lieferantenmanagement','Nachhaltigkeit Lieferkette']},
+    {t:'Supply Chain', items:['Bedarf / Bestand','Lager / Logistik / Versand','Zoll / Außenhandel']},
+    {t:'HSE / EHS', items:['Arbeitssicherheit','Umwelt','Gesundheit']},
+    {t:'Security / Krisen', items:['Werkschutz','Business Continuity']},
+    {t:'Infrastruktur', items:['Real Estate','Facility','Fuhrpark','Travel','Office / Verwaltung','Records Management']}
+  ]},
+  {id:'cto', tab:'Technik', role:'CTO / CPO', title:'Produkt & Entwicklung', children:[
+    {t:'Produktmanagement', items:['was angeboten wird']},
+    {t:'Forschung', items:['neues Wissen']},
+    {t:'Entwicklung / Engineering', items:['Konstruktion','Code','Anlagen']},
+    {t:'Design / UX', items:['Nutzung','Oberfläche']},
+    {t:'Innovation', items:['Labs','Piloten']}
+  ]},
+  {id:'div', tab:'Divisions', role:'Zweite Achse', title:'Geschäftsbereiche / Divisions', children:[
+    {t:'Nach Produkt / Sparte', items:['Marke A','Plattform B','Produktlinie C']},
+    {t:'Nach Kunde', items:['Privatkunden','Geschäftskunden / SME','Key Accounts / Enterprise','Public Sector']},
+    {t:'Nach Region', items:['DACH','Europa','Americas','APAC']},
+    {t:'Mini-Funktionen in jeder Division', items:['Divisionsleitung / P&L','Divisionsvertrieb','Operations / Delivery','Divisionscontrolling → Konzerncontrolling','HR Business Partner → HR','IT-Ansprechpartner → IT']}
+  ]}
+];
+
+const tabs = document.getElementById('tabs');
+const grid = document.getElementById('grid');
+let active = 'alle';
+
+function allTabs(){ return ['alle', ...data.map(d => d.tab)]; }
+function paintTabs(){
+  tabs.innerHTML = allTabs().map(t => `<button class="tab ${t===active?'active':''}" data-t="${t}">${t==='alle'?'Alle':t}</button>`).join('');
+}
+function cardHTML(block){
+  return `<article class="card" data-card="${block.id}">
+    <div class="role">${block.role}</div>
+    <h2>${block.title}</h2>
+    <div class="tree">${block.children.map(ch => `
+      <details open>
+        <summary>${ch.t}</summary>
+        <div class="chiprow">${ch.items.map(i => `<span class="chip">${i}</span>`).join('')}</div>
+      </details>`).join('')}</div>
+  </article>`;
+}
+function render(){
+  const q = document.getElementById('q').value.trim().toLowerCase();
+  const blocks = data.filter(b => active==='alle' || b.tab===active);
+  grid.innerHTML = blocks.map(cardHTML).join('');
+  if(!q) return;
+  document.querySelectorAll('.card').forEach(card => {
+    const hit = card.innerText.toLowerCase().includes(q);
+    card.classList.toggle('hide', !hit);
+    card.querySelectorAll('details').forEach(d => {
+      const ok = d.innerText.toLowerCase().includes(q);
+      d.style.display = ok || card.innerText.toLowerCase().includes(q) ? '' : 'none';
+      if(ok) d.open = true;
+    });
+  });
+}
+paintTabs(); render();
+tabs.addEventListener('click', e => {
+  const t = e.target.dataset.t; if(!t) return; active = t; paintTabs(); render();
+});
+document.getElementById('q').addEventListener('input', render);
+document.getElementById('openAll').onclick = () => document.querySelectorAll('details').forEach(d => d.open = true);
+document.getElementById('closeAll').onclick = () => document.querySelectorAll('details').forEach(d => d.open = false);
+</script>
+</body>
+</html>
