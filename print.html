@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<title>Unternehmenslandkarte — Druckfassung</title>
+<style>
+@page { size: A4; margin: 14mm 12mm 16mm; }
+:root { --ink:#1a1f2b; --muted:#4b5568; --line:#d7deea; }
+* { box-sizing: border-box; }
+body { margin: 0; color: var(--ink); font: 11pt/1.45 Georgia, 'Times New Roman', serif; background: #fff; }
+h1 { font-size: 26pt; margin: 0 0 6px; font-weight: 400; }
+.lead { color: var(--muted); margin: 0 0 18px; font-family: system-ui, sans-serif; font-size: 10pt; }
+.meta { font-family: system-ui, sans-serif; font-size: 9pt; color: var(--muted); margin-bottom: 22px; }
+section { break-inside: avoid; margin: 0 0 16px; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.bar { color: #fff; padding: 8px 12px; font-family: system-ui, sans-serif; font-size: 11pt; font-weight: 700; letter-spacing: .02em; }
+.organe .bar { background: #334155; }
+.ceo .bar { background: #4f46e5; }
+.cfo .bar { background: #0369a1; }
+.chro .bar { background: #7c3aed; }
+.legal .bar { background: #b45309; }
+.cio .bar { background: #0f766e; }
+.cso .bar { background: #be123c; }
+.cmo .bar { background: #be185d; }
+.coo .bar { background: #15803d; }
+.cto .bar { background: #6d28d9; }
+.div .bar { background: #0f172a; }
+.sub { font-family: system-ui, sans-serif; font-size: 8.5pt; opacity: .9; font-weight: 500; }
+.inner { padding: 8px 12px 10px; }
+h3 { margin: 8px 0 2px; font-size: 11pt; font-family: system-ui, sans-serif; }
+h3:first-child { margin-top: 0; }
+ul { margin: 0 0 6px; padding-left: 18px; }
+li { margin: 1px 0; }
+.note { font-family: system-ui, sans-serif; font-size: 9pt; color: var(--muted); margin-top: 18px; }
+@media print { .noprint { display: none !important; } body { font-size: 10pt; } }
+.noprint { font-family: system-ui, sans-serif; background: #111827; color: #fff; padding: 10px 14px; margin-bottom: 16px; }
+.noprint b { color: #e2c58a; }
+</style>
+</head>
+<body>
+<div class="noprint">Zum PDF: <b>Strg+P</b> (Mac: Cmd+P) → Ziel „Als PDF speichern“ → Hintergründe drucken an.</div>
+<h1>Unternehmenslandkarte</h1>
+<p class="lead">Maximal-Organigramm aller Organe, Ressorts, Abteilungen und Geschäftsbereiche. Funktionen können in kleinen Firmen gebündelt werden — sie verschwinden dadurch nicht.</p>
+<p class="meta">Druckfassung · A4 · alle Knoten aufgeklappt · Controlling unter CFO, plus Divisionscontrolling in den Geschäftsbereichen</p>
+
+<section class="organe"><div class="bar">Eigentümer & Aufsichtsrat <span class="sub">· Eigentum & Kontrolle</span></div><div class="inner">
+<h3>Gesellschafterversammlung / Hauptversammlung</h3><ul><li>Beschlüsse der Eigentümer</li><li>Entlastung</li><li>Satzungsfragen</li></ul>
+<h3>Aufsichtsrat / Beirat</h3><ul><li>Prüfungsausschuss</li><li>Personalausschuss</li><li>Nominierungsausschuss</li></ul>
+<h3>Interne Revision / Internal Audit</h3><ul><li>unabhängige Prüfung</li><li>oft fachlich an den Aufsichtsrat</li><li>nicht an den geprüften CFO gebunden</li></ul>
+</div></section>
+
+<section class="ceo"><div class="bar">CEO / Vorsitz <span class="sub">· Strategie & Konzernstab</span></div><div class="inner">
+<h3>CEO-Office / Gremienbüro</h3><ul><li>Sekretariat</li><li>Vorstandskalender</li><li>Protokoll</li></ul>
+<h3>Strategie / Konzernentwicklung</h3><ul><li>Zielbild</li><li>Portfolio</li><li>Steuerungslogik</li></ul>
+<h3>M&A / Beteiligungen</h3><ul><li>Kauf</li><li>Verkauf</li><li>Integration</li></ul>
+<h3>PMO / Transformation</h3><ul><li>Projektportfolio</li><li>Change</li><li>Priorisierung</li></ul>
+<h3>Kommunikation</h3><ul><li>PR / Presse</li><li>Interne Kommunikation</li><li>Krisenkommunikation</li></ul>
+<h3>Public Affairs</h3><ul><li>Politik</li><li>Verbände</li><li>Government Relations</li></ul>
+<h3>ESG / Nachhaltigkeit / CSR</h3><ul><li>Strategie</li><li>Bericht</li><li>Stiftung / Engagement</li></ul>
+<h3>Risikomanagement</h3><ul><li>Konzernrisiken</li><li>Risikokatalog</li><li>Steuerung</li></ul>
+<h3>Versicherungen</h3><ul><li>Policen</li><li>Schäden</li><li>Captives</li></ul>
+</div></section>
+
+<section class="cfo"><div class="bar">CFO / Finanzen <span class="sub">· Buchhaltung · Controlling · Treasury · Steuern</span></div><div class="inner">
+<h3>Rechnungswesen / Buchhaltung</h3><ul><li>Hauptbuch</li><li>Anlagenbuchhaltung</li><li>Debitoren / Order-to-Cash</li><li>Kreditoren / Purchase-to-Pay</li><li>Lohnbuchhaltung</li><li>Konzernabschluss / Konsolidierung</li></ul>
+<h3>Controlling</h3><ul><li>Konzerncontrolling</li><li>FP&A: Budget, Forecast, Szenarien</li><li>Operatives Controlling</li><li>Vertriebscontrolling</li><li>HR-Controlling</li><li>Investitionscontrolling</li><li>ESG-Controlling</li></ul>
+<h3>Treasury</h3><ul><li>Liquidität / Cash</li><li>Banken / Finanzierung</li><li>Zins- und Währungsmanagement</li><li>Anlage überschüssiger Mittel</li></ul>
+<h3>Credit Management</h3><ul><li>Zahlungsziele</li><li>Forderungsrisiko</li></ul>
+<h3>Steuern / Tax</h3><ul><li>Ertragsteuern</li><li>Umsatzsteuer</li><li>Transferpreise / International Tax</li></ul>
+<h3>Investor Relations</h3><ul><li>Kapitalmarkt</li><li>Analysten</li><li>Hauptversammlung</li></ul>
+<h3>Shared Service Finance</h3><ul><li>Massenprozesse zentral</li></ul>
+</div></section>
+
+<section class="chro"><div class="bar">CHRO / Personal</div><div class="inner">
+<h3>HR Business Partner</h3><ul><li>Anlaufstelle der Fachbereiche</li></ul>
+<h3>Recruiting / Talent Acquisition</h3><ul><li>Suche</li><li>Auswahl</li><li>Onboarding-Start</li></ul>
+<h3>HR Operations / People Ops</h3><ul><li>Stammdaten</li><li>Verträge / Zeugnisse</li><li>Offboarding</li></ul>
+<h3>Compensation & Benefits</h3><ul><li>Gehalt</li><li>Bonus</li><li>Altersvorsorge</li></ul>
+<h3>Payroll / Entgeltabrechnung</h3><ul><li>Lohnlauf</li><li>Bescheinigungen</li></ul>
+<h3>Learning & Development</h3><ul><li>Schulung</li><li>Führungskräfte</li></ul>
+<h3>Workforce Planning</h3><ul><li>Headcount</li><li>Organisation</li></ul>
+<h3>Labor Relations</h3><ul><li>Betriebsrat</li><li>Tarif</li><li>Arbeitsrecht-Alltag</li></ul>
+<h3>Health / BEM / BGM</h3><ul><li>Gesundheit</li><li>Wiedereingliederung</li></ul>
+<h3>Diversity / Inclusion</h3><ul><li>Kultur</li><li>Programme</li></ul>
+</div></section>
+
+<section class="legal"><div class="bar">General Counsel <span class="sub">· Recht · Compliance · Datenschutz</span></div><div class="inner">
+<h3>Legal</h3><ul><li>Vertragsrecht</li><li>Gesellschaftsrecht</li><li>Arbeitsrecht</li><li>Litigation</li><li>IP / Marken / Patente</li></ul>
+<h3>Compliance</h3><ul><li>Regeln</li><li>Hinweisgebersystem</li><li>Investigations</li><li>Regulierungsmanagement</li></ul>
+<h3>Datenschutz / DPO</h3><ul><li>DSGVO</li><li>Betroffenenrechte</li></ul>
+</div></section>
+
+<section class="cio"><div class="bar">CIO / CDO / CISO <span class="sub">· IT, Daten, Digitales</span></div><div class="inner">
+<h3>IT-Infrastruktur / Workplace</h3><ul><li>Netz</li><li>Cloud</li><li>Endgeräte</li></ul>
+<h3>Application Management / ERP</h3><ul><li>SAP / Datev / CRM</li></ul>
+<h3>Enterprise Architecture</h3><ul><li>Systemlandschaft</li></ul>
+<h3>IT-Helpdesk</h3><ul><li>Tickets</li><li>Störungen</li></ul>
+<h3>IT-Security / CISO</h3><ul><li>Berechtigungen</li><li>SOC</li><li>Backups</li></ul>
+<h3>Data / Analytics / BI</h3><ul><li>Dashboards</li><li>Modelle</li></ul>
+<h3>Master Data</h3><ul><li>Kunden-, Artikel-, Lieferantenstamm</li></ul>
+<h3>Digital / Product Tech</h3><ul><li>eigene Software</li><li>Plattform</li></ul>
+<h3>KI / Automation</h3><ul><li>Assistenzsysteme</li><li>Prozessautomatisierung</li></ul>
+</div></section>
+
+<section class="cso"><div class="bar">CSO / CCO <span class="sub">· Vertrieb & Kunde</span></div><div class="inner">
+<h3>Vertrieb</h3><ul><li>Key Account</li><li>Field Sales</li><li>Inside Sales / SDR</li><li>Partner- / Channelvertrieb</li></ul>
+<h3>Pricing</h3><ul><li>Preise</li><li>Rabatte</li><li>Konditionen</li></ul>
+<h3>Business Development</h3><ul><li>neue Märkte</li><li>neue Angebote</li></ul>
+<h3>Customer Success</h3><ul><li>Bestandskunden erweitern</li></ul>
+<h3>Customer Service / Support</h3><ul><li>Störung</li><li>Reklamation</li><li>Hotline</li></ul>
+<h3>Customer Experience</h3><ul><li>Kundenreise über Kanäle</li></ul>
+</div></section>
+
+<section class="cmo"><div class="bar">CMO <span class="sub">· Marke & Nachfrage</span></div><div class="inner">
+<h3>Brand / Corporate Marketing</h3><ul><li>Marke</li><li>Kampagnenrahmen</li></ul>
+<h3>Produktmarketing</h3><ul><li>warum dieses Produkt</li></ul>
+<h3>Digital / Performance Marketing</h3><ul><li>Ads</li><li>SEO</li><li>Website</li></ul>
+<h3>Content / Kampagnen</h3><ul><li>Texte</li><li>Assets</li></ul>
+<h3>Sponsoring / Partnerships</h3><ul><li>Kooperationen</li></ul>
+<h3>Employer Branding</h3><ul><li>oft mit HR</li></ul>
+</div></section>
+
+<section class="coo"><div class="bar">COO <span class="sub">· Operations, Kette, Infrastruktur</span></div><div class="inner">
+<h3>Operations / Delivery</h3><ul><li>laufender Betrieb</li><li>Projekte</li></ul>
+<h3>Produktion / Fertigung</h3><ul><li>Herstellung</li><li>Produktionsplanung</li><li>Instandhaltung</li><li>Industrial Engineering</li></ul>
+<h3>Qualität / QM</h3><ul><li>QS</li><li>QMS</li><li>Lieferantenqualität</li></ul>
+<h3>After Sales / Field Service</h3><ul><li>Wartung</li><li>Ersatzteile</li></ul>
+<h3>Einkauf / Procurement</h3><ul><li>Strategischer Einkauf</li><li>Operativer Einkauf</li><li>P2P</li><li>Lieferantenmanagement</li><li>Nachhaltigkeit Lieferkette</li></ul>
+<h3>Supply Chain</h3><ul><li>Bedarf / Bestand</li><li>Lager / Logistik / Versand</li><li>Zoll / Außenhandel</li></ul>
+<h3>HSE / EHS</h3><ul><li>Arbeitssicherheit</li><li>Umwelt</li><li>Gesundheit</li></ul>
+<h3>Security / Krisen</h3><ul><li>Werkschutz</li><li>Business Continuity</li></ul>
+<h3>Infrastruktur</h3><ul><li>Real Estate</li><li>Facility</li><li>Fuhrpark</li><li>Travel</li><li>Office / Verwaltung</li><li>Records Management</li></ul>
+</div></section>
+
+<section class="cto"><div class="bar">CTO / CPO <span class="sub">· Produkt & Entwicklung</span></div><div class="inner">
+<h3>Produktmanagement</h3><ul><li>was angeboten wird</li></ul>
+<h3>Forschung</h3><ul><li>neues Wissen</li></ul>
+<h3>Entwicklung / Engineering</h3><ul><li>Konstruktion</li><li>Code</li><li>Anlagen</li></ul>
+<h3>Design / UX</h3><ul><li>Nutzung</li><li>Oberfläche</li></ul>
+<h3>Innovation</h3><ul><li>Labs</li><li>Piloten</li></ul>
+</div></section>
+
+<section class="div"><div class="bar">Geschäftsbereiche / Divisions <span class="sub">· zweite Achse, eigene P&L</span></div><div class="inner">
+<h3>Nach Produkt / Sparte</h3><ul><li>Marke A</li><li>Plattform B</li><li>Produktlinie C</li></ul>
+<h3>Nach Kunde</h3><ul><li>Privatkunden</li><li>Geschäftskunden / SME</li><li>Key Accounts / Enterprise</li><li>Public Sector</li></ul>
+<h3>Nach Region</h3><ul><li>DACH</li><li>Europa</li><li>Americas</li><li>APAC</li></ul>
+<h3>Mini-Funktionen in jeder Division</h3><ul><li>Divisionsleitung / P&L</li><li>Divisionsvertrieb</li><li>Operations / Delivery</li><li>Divisionscontrolling → Konzerncontrolling</li><li>HR Business Partner → HR</li><li>IT-Ansprechpartner → IT</li></ul>
+</div></section>
+
+<p class="note">Lesart: Oben Eigentümer und Aufsicht, darunter der Vorstand mit Ressorts, quer dazu die Geschäftsbereiche. Controlling dokumentiert nicht — das macht die Buchhaltung. Controlling steuert Plan gegen Ist. Treasury sichert Liquidität. Revision prüft unabhängig.</p>
+</body>
+</html>
